@@ -12,12 +12,13 @@ public class Location {
     private int locationId;
     private String name;
     
-    public int getLocationId(){
-        return locationId;
+    public Location(String name){
+        this.name = name;
+        locationId = IdMaker.newId();
     }
     
-    public void setLocationId(int id){
-        locationId = id;
+    public int getLocationId(){
+        return locationId;
     }
     
     public String getName() {

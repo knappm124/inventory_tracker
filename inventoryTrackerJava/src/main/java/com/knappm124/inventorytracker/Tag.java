@@ -11,56 +11,68 @@ import java.util.ArrayList;
  * @author melissa
  */
 public class Tag {
-    
+
     private int tagId;
     private String name;
     private final ArrayList<String> options;
-    
-    public Tag(int tagId, String name, ArrayList<String> options){
-        this.tagId = tagId;
-        this.name = name;
-        this.options = options;
+
+    private Tag(TagBuilder builder) {
+        this.tagId = builder.tagId;
+        this.name = builder.name;
+        this.options = builder.options;
     }
-    
-    public Tag(int tagId, String name) {
-        this.tagId = tagId;
-        this.name = name;
-        this.options = new ArrayList();
-    }
-    
+
     public int getTagId() {
         return tagId;
     }
-    
-    public void setTagId(int id) {
-        tagId = id;
-    }
-    
-    public String getName(){
+
+    public String getName() {
         return name;
     }
-    
+
     public void setName(String newName) {
         name = newName;
     }
-    
-    public ArrayList<String> getOptions(){
+
+    public ArrayList<String> getOptions() {
         return options;
     }
-    
+
     public void addOption(String newOption) {
-        if(options.indexOf(newOption) != -1) {
+        if (options.indexOf(newOption) != -1) {
             throw new IllegalArgumentException("This option already exists for this tag");
         } else {
             options.add(newOption);
         }
     }
-    
+
     public void removeOption(String option) {
-        if(options.indexOf(option) == -1){
+        if (options.indexOf(option) == -1) {
             throw new IllegalArgumentException("This option does not exist");
         } else {
             options.remove(option);
+        }
+    }
+
+    public class TagBuilder {
+
+        private int tagId;
+        private String name;
+        private ArrayList<String> options;
+        
+        public TagBuilder(String name){
+            tagId = IdMaker.newId();
+            this.name = name;
+            this.options = new ArrayList();
+        }
+        
+        public TagBuilder withOptions(ArrayList<String> options){
+            this.options = options;
+            return this;
+        }
+        
+        public Tag build(){
+            return new Tag(this);
         }
     }
 }

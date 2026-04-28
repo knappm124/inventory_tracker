@@ -13,10 +13,12 @@ import java.util.ArrayList;
 public class Collections {
     ArrayList<Location> locations;
     ArrayList<Tag> tags;
+    ArrayList<Item> items;
     
     public Collections() {
         locations = new ArrayList();
         tags = new ArrayList();
+        items = new ArrayList();
     }
     
     public Collections(ArrayList<Location> locations, ArrayList<Tag> tags) {
@@ -24,13 +26,14 @@ public class Collections {
         this.tags = tags;
     }
     
-    public void addLocation(Location l) {
+    public ArrayList<Location> addLocation(Location l) {
         for (var location : locations){
             if (l.getName().equals(location.getName())){
                 throw new IllegalArgumentException("Location already exists");
             }
         }
         locations.add(l);
+        return locations;
     }
     
     public ArrayList<Location> getLocations() {
@@ -50,23 +53,52 @@ public class Collections {
         return tags;
     }
     
-    public void addTag(Tag t) {
+    public ArrayList<Tag> addTag(Tag t) {
         for (var tag : tags){
             if(tag.getName().equals(t.getName())){
                 throw new IllegalArgumentException("This tag already exists");
             }
         }
         tags.add(t);
+        return tags;
     }
     
-    public void removeTag(Tag t) {
+    public ArrayList<Tag> removeTag(Tag t) {
         for (var tag : tags){
             if(tag.getName().equals(t.getName())){
                 tags.remove(t);
-                return;
+                return tags;
             }
         }
         throw new IllegalArgumentException("Tag does not exist");
+    }
+    
+    public ArrayList<Item> removeItem(Item oldItem){
+        for(Item i : items){
+            if(i.getItemId() == oldItem.getItemId()){
+                items.remove(oldItem);
+                return items;
+            }
+        }
+        throw new IllegalArgumentException("Item with id " + oldItem.getItemId() + " does not exist");
+    }
+    
+    public Item getItem(int itemId){
+        for(Item i : items){
+            if(i.getItemId() == itemId){
+                return i;
+            }
+        }
+        throw new IllegalArgumentException("Item with id " + itemId + " does not exist");
+    }
+    
+    public ArrayList<Item> getAllItems(){
+        return items;
+    }
+    
+    public ArrayList<Item> addItem(Item i){
+        items.add(i);
+        return items;
     }
     
     public void save() {
