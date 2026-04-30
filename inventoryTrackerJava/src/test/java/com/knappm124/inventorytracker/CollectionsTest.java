@@ -150,6 +150,21 @@ public class CollectionsTest {
     }
 
     /**
+     * Test of addItem method, of class Collections.
+     */
+    @Test
+    public void testAddItem() {
+        System.out.println("addItem");
+        Item i = null;
+        Collections instance = new Collections();
+        ArrayList<Item> expResult = null;
+        ArrayList<Item> result = instance.addItem(i);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
      * Test of save method, of class Collections.
      */
     @Test

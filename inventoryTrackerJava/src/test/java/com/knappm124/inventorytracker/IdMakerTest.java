@@ -11,48 +11,42 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author melissa
  */
-public class LocationTest {
+public class IdMakerTest {
     
-    public LocationTest() {
+    public IdMakerTest() {
     }
 
     /**
-     * Test of getLocationId method, of class Location.
+     * Test of newId method, of class IdMaker.
      */
     @Test
-    public void testGetLocationId() {
-        System.out.println("getLocationId");
-        Location instance = null;
+    public void testNewId() {
+        System.out.println("newId");
         int expResult = 0;
-        int result = instance.getLocationId();
+        int result = IdMaker.newId();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getName method, of class Location.
+     * Test of updateCounter method, of class IdMaker.
      */
     @Test
-    public void testGetName() {
-        System.out.println("getName");
-        Location instance = null;
-        String expResult = "";
-        String result = instance.getName();
-        assertEquals(expResult, result);
+    public void testUpdateCounter() {
+        System.out.println("updateCounter");
+        IdMaker.updateCounter();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of setName method, of class Location.
+     * Test of saveCounter method, of class IdMaker.
      */
     @Test
-    public void testSetName() {
-        System.out.println("setName");
-        String newName = "";
-        Location instance = null;
-        instance.setName(newName);
+    public void testSaveCounter() {
+        System.out.println("saveCounter");
+        IdMaker.saveCounter();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

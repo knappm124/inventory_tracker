@@ -32,19 +32,6 @@ public class TagTest {
     }
 
     /**
-     * Test of setTagId method, of class Tag.
-     */
-    @Test
-    public void testSetTagId() {
-        System.out.println("setTagId");
-        int id = 0;
-        Tag instance = null;
-        instance.setTagId(id);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of getName method, of class Tag.
      */
     @Test

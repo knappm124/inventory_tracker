@@ -24,7 +24,7 @@ public class ItemTest {
     @Test
     public void testGetName() {
         System.out.println("getName");
-        Item instance = new Item();
+        Item instance = null;
         String expResult = "";
         String result = instance.getName();
         assertEquals(expResult, result);
@@ -39,7 +39,7 @@ public class ItemTest {
     public void testSetName() {
         System.out.println("setName");
         String newName = "";
-        Item instance = new Item();
+        Item instance = null;
         String expResult = "";
         String result = instance.setName(newName);
         assertEquals(expResult, result);
@@ -53,7 +53,7 @@ public class ItemTest {
     @Test
     public void testGetPrice() {
         System.out.println("getPrice");
-        Item instance = new Item();
+        Item instance = null;
         double expResult = 0.0;
         double result = instance.getPrice();
         assertEquals(expResult, result, 0);
@@ -68,7 +68,7 @@ public class ItemTest {
     public void testSetPrice() {
         System.out.println("setPrice");
         double newPrice = 0.0;
-        Item instance = new Item();
+        Item instance = null;
         double expResult = 0.0;
         double result = instance.setPrice(newPrice);
         assertEquals(expResult, result, 0);
@@ -82,7 +82,7 @@ public class ItemTest {
     @Test
     public void testGetStatus() {
         System.out.println("getStatus");
-        Item instance = new Item();
+        Item instance = null;
         Status expResult = null;
         Status result = instance.getStatus();
         assertEquals(expResult, result);
@@ -97,7 +97,7 @@ public class ItemTest {
     public void testSetStatus() {
         System.out.println("setStatus");
         Status newStatus = null;
-        Item instance = new Item();
+        Item instance = null;
         Status expResult = null;
         Status result = instance.setStatus(newStatus);
         assertEquals(expResult, result);
@@ -111,7 +111,7 @@ public class ItemTest {
     @Test
     public void testGetLocationId() {
         System.out.println("getLocationId");
-        Item instance = new Item();
+        Item instance = null;
         int expResult = 0;
         int result = instance.getLocationId();
         assertEquals(expResult, result);
@@ -126,7 +126,7 @@ public class ItemTest {
     public void testSetLocationId() {
         System.out.println("setLocationId");
         int newLocationId = 0;
-        Item instance = new Item();
+        Item instance = null;
         int expResult = 0;
         int result = instance.setLocationId(newLocationId);
         assertEquals(expResult, result);
@@ -140,7 +140,7 @@ public class ItemTest {
     @Test
     public void testGetItemId() {
         System.out.println("getItemId");
-        Item instance = new Item();
+        Item instance = null;
         int expResult = 0;
         int result = instance.getItemId();
         assertEquals(expResult, result);
@@ -156,7 +156,7 @@ public class ItemTest {
         System.out.println("addTag");
         Tag t = null;
         String option = "";
-        Item instance = new Item();
+        Item instance = null;
         HashMap<Tag, ArrayList<String>> expResult = null;
         HashMap<Tag, ArrayList<String>> result = instance.addTag(t, option);
         assertEquals(expResult, result);
@@ -172,7 +172,7 @@ public class ItemTest {
         System.out.println("removeTag");
         Tag t = null;
         String option = "";
-        Item instance = new Item();
+        Item instance = null;
         HashMap<Tag, ArrayList<String>> expResult = null;
         HashMap<Tag, ArrayList<String>> result = instance.removeTag(t, option);
         assertEquals(expResult, result);
