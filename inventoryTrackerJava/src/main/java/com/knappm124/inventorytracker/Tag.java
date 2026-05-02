@@ -54,7 +54,7 @@ public class Tag {
         }
     }
 
-    public class TagBuilder {
+    public static class TagBuilder {
 
         private int tagId;
         private String name;

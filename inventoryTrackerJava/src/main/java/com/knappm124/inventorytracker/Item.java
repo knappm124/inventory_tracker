@@ -6,12 +6,13 @@ package com.knappm124.inventorytracker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.io.Serializable;
 
 /**
  *
  * @author melissa
  */
-public class Item {
+public class Item implements Serializable {
 
     private int itemId;
     private String name;
@@ -19,6 +20,7 @@ public class Item {
     private HashMap<Tag, ArrayList<String>> tags = new HashMap();
     private int locationId;
     private Status itemStatus;
+    private static final long serialVersionUID = 1L;
 
     private Item(ItemBuilder builder) {
         this.itemId = builder.itemId;

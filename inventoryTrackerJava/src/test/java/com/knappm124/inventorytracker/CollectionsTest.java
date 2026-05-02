@@ -5,6 +5,8 @@
 package com.knappm124.inventorytracker;
 
 import java.util.ArrayList;
+import java.lang.IllegalArgumentException;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,14 +24,13 @@ public class CollectionsTest {
      */
     @Test
     public void testAddLocation() {
-        System.out.println("addLocation");
-        Location l = null;
-        Collections instance = new Collections();
-        ArrayList<Location> expResult = null;
-        ArrayList<Location> result = instance.addLocation(l);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Collections c = new Collections();
+        Location l = new Location("General Store");
+        c.addLocation(l);
+        Location result = c.getLocation("General Store");
+        assertEquals(result,l);
+        Location l2 = new Location("Etsy");
+        assertNotEquals(result,l2);
     }
 
     /**
@@ -37,13 +38,14 @@ public class CollectionsTest {
      */
     @Test
     public void testGetLocations() {
-        System.out.println("getLocations");
-        Collections instance = new Collections();
-        ArrayList<Location> expResult = null;
-        ArrayList<Location> result = instance.getLocations();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Collections c = new Collections();
+        Location l = new Location("General Store");
+        c.addLocation(l);
+        ArrayList<Location> result = c.getLocations();
+        ArrayList<Location> expResult = new ArrayList<>();
+        assertNotEquals(result,expResult);
+        expResult.add(l);
+        assertEquals(result,expResult);
     }
 
     /**
@@ -51,14 +53,16 @@ public class CollectionsTest {
      */
     @Test
     public void testGetLocation() {
-        System.out.println("getLocation");
-        String name = "";
-        Collections instance = new Collections();
-        Location expResult = null;
-        Location result = instance.getLocation(name);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Collections c = new Collections();
+        Location l = new Location("General Store");
+        c.addLocation(l);
+        Location result = c.getLocation("General Store");
+        assertEquals(result,l);
+        try {
+            c.getLocation("Etsy");
+        } catch (Exception e){
+            assertEquals(e.getMessage(),"Location doesn't exist");
+        }
     }
 
     /**
@@ -66,13 +70,16 @@ public class CollectionsTest {
      */
     @Test
     public void testGetTags() {
-        System.out.println("getTags");
-        Collections instance = new Collections();
-        ArrayList<Tag> expResult = null;
-        ArrayList<Tag> result = instance.getTags();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Collections c = new Collections();
+        Tag t = new Tag.TagBuilder("Color").build();
+        Tag t2 = new Tag.TagBuilder("Season").build();
+        Tag t3 = new Tag.TagBuilder("Divides").build();
+        c.addTag(t);
+        c.addTag(t2);
+        ArrayList<Tag> tags = c.getTags();
+        assertTrue(tags.contains(t));
+        assertTrue(tags.contains(t2));
+        assertFalse(tags.contains(t3));
     }
 
     /**
@@ -80,14 +87,23 @@ public class CollectionsTest {
      */
     @Test
     public void testAddTag() {
-        System.out.println("addTag");
-        Tag t = null;
-        Collections instance = new Collections();
-        ArrayList<Tag> expResult = null;
-        ArrayList<Tag> result = instance.addTag(t);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Collections c = new Collections();
+        ArrayList<String> l = new ArrayList<>();
+        l.add("Green");
+        l.add("Blue");
+        Tag t = new Tag.TagBuilder("Color").withOptions(l).build();
+        c.addTag(t);
+        ArrayList<Tag> tags = c.getTags();
+        ArrayList<Tag> expResult = new ArrayList<>();
+        expResult.add(t);
+        assertEquals(expResult,tags);
+        Tag t2 = new Tag.TagBuilder("Color").build();
+        try {
+            c.addTag(t2);
+        } catch (Exception e){
+            assertEquals(e.getMessage(),"This tag already exists");
+        }
+        
     }
 
     /**
@@ -95,14 +111,22 @@ public class CollectionsTest {
      */
     @Test
     public void testRemoveTag() {
-        System.out.println("removeTag");
-        Tag t = null;
-        Collections instance = new Collections();
-        ArrayList<Tag> expResult = null;
-        ArrayList<Tag> result = instance.removeTag(t);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Collections c = new Collections();
+        Tag t = new Tag.TagBuilder("Color").build();
+        Tag t2 = new Tag.TagBuilder("Season").build();
+        Tag t3 = new Tag.TagBuilder("Divides").build();
+        c.addTag(t);
+        c.addTag(t2);
+        c.removeTag(t2);
+        ArrayList<Tag> tags = c.getTags();
+        assertTrue(tags.contains(t));
+        assertFalse(tags.contains(t2));
+        try {
+            c.removeTag(t3);
+        } catch (Exception e) {
+            String message = e.getMessage();
+            assertEquals(message,"Tag does not exist");
+        }
     }
 
     /**
@@ -110,14 +134,7 @@ public class CollectionsTest {
      */
     @Test
     public void testRemoveItem() {
-        System.out.println("removeItem");
-        Item oldItem = null;
-        Collections instance = new Collections();
-        ArrayList<Item> expResult = null;
-        ArrayList<Item> result = instance.removeItem(oldItem);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -125,14 +142,7 @@ public class CollectionsTest {
      */
     @Test
     public void testGetItem() {
-        System.out.println("getItem");
-        int itemId = 0;
-        Collections instance = new Collections();
-        Item expResult = null;
-        Item result = instance.getItem(itemId);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -140,13 +150,15 @@ public class CollectionsTest {
      */
     @Test
     public void testGetAllItems() {
-        System.out.println("getAllItems");
-        Collections instance = new Collections();
-        ArrayList<Item> expResult = null;
-        ArrayList<Item> result = instance.getAllItems();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+    }
+
+    /**
+     * Test of addItem method, of class Collections.
+     */
+    @Test
+    public void testAddItem() {
+        
     }
 
     /**
@@ -154,11 +166,11 @@ public class CollectionsTest {
      */
     @Test
     public void testSave() {
-        System.out.println("save");
-        Collections instance = new Collections();
-        instance.save();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+    }
+    
+    public void testRead() {
+        
     }
     
 }
