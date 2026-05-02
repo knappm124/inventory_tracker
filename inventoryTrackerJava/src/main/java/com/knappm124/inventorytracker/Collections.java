@@ -5,15 +5,23 @@
 package com.knappm124.inventorytracker;
 
 import java.util.ArrayList;
+import java.io.Serializable;
+import java.io.FileInputStream;
+import java.io.ObjectOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
 
 /**
  *
  * @author melissa
  */
-public class Collections {
+public class Collections implements Serializable{
     ArrayList<Location> locations;
     ArrayList<Tag> tags;
     ArrayList<Item> items;
+    private static final long serialVersionUID = 1L;
     
     public Collections() {
         locations = new ArrayList();
@@ -21,9 +29,10 @@ public class Collections {
         items = new ArrayList();
     }
     
-    public Collections(ArrayList<Location> locations, ArrayList<Tag> tags) {
+    public Collections(ArrayList<Location> locations, ArrayList<Tag> tags, ArrayList<Item> items) {
         this.locations = locations;
         this.tags = tags;
+        this.items = items;
     }
     
     public ArrayList<Location> addLocation(Location l) {
@@ -102,6 +111,75 @@ public class Collections {
     }
     
     public void save() {
-    //TODO: Write saving logic    
+        try{ 
+            FileOutputStream fos = new FileOutputStream("tags.txt");
+            try (ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+                for(Tag t : tags){
+                    oos.writeObject(t);
+                }
+            }
+            
+            FileOutputStream fos2 = new FileOutputStream("locations.txt");
+            try (ObjectOutputStream oos2 = new ObjectOutputStream(fos2)) {
+                for(Location l : locations){
+                    oos2.writeObject(l);
+                }
+            }
+            
+            FileOutputStream fos3 = new FileOutputStream("items.txt");
+            try (ObjectOutputStream oos3 = new ObjectOutputStream(fos3)) {
+                for(Item i : items){
+                    oos3.writeObject(i);
+                }
+            }
+        } catch(IOException e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void read() {
+        try {
+            tags = new ArrayList<>();
+            FileInputStream fis = new FileInputStream("tags.txt");
+            try (ObjectInputStream ois = new ObjectInputStream(fis)) {
+                while(ois.read() != -1){
+                    try {
+                        Tag t = (Tag) ois.readObject();
+                        tags.add(t);
+                    } catch (ClassNotFoundException ex) {
+                        System.getLogger(Collections.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                    }
+                }
+            }
+
+            locations = new ArrayList<>();
+            FileInputStream fis2 = new FileInputStream("locations.txt");
+            try (ObjectInputStream ois2 = new ObjectInputStream(fis2)) {
+                while(ois2.read() != -1){
+                    try {
+                        Location l = (Location) ois2.readObject();
+                        locations.add(l);
+                    } catch (ClassNotFoundException ex) {
+                        System.getLogger(Collections.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                    }
+                }
+            }            
+
+            items = new ArrayList<>();
+            FileInputStream fis3 = new FileInputStream("items.txt");
+            try (ObjectInputStream ois3 = new ObjectInputStream(fis3)) {
+                while(ois3.read() != -1){
+                    try {
+                        Item i = (Item) ois3.readObject();
+                        items.add(i);
+                    } catch (ClassNotFoundException ex) {
+                        System.getLogger(Collections.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                    }
+                }
+            }   
+            
+        } catch(IOException e){
+            System.out.println(e.getMessage());
+        }
     }
 }
