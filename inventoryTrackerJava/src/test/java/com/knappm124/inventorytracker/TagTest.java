@@ -7,14 +7,22 @@ package com.knappm124.inventorytracker;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeAll;
 
 /**
  *
  * @author melissa
  */
 public class TagTest {
+    private static Tag t;
     
-    public TagTest() {
+    @BeforeAll
+    public static void globalSetUp(){
+        ArrayList<String> options = new ArrayList<>();
+        options.add("Blue");
+        options.add("Red");
+        t = new Tag.TagBuilder("Color").withOptions(options).build();
+        t.setTagId(326);
     }
 
     /**
@@ -22,13 +30,9 @@ public class TagTest {
      */
     @Test
     public void testGetTagId() {
-        System.out.println("getTagId");
-        Tag instance = null;
-        int expResult = 0;
-        int result = instance.getTagId();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int expResult = 326;
+        int result = t.getTagId();
+        assertEquals(result,expResult);
     }
 
     /**
@@ -36,13 +40,9 @@ public class TagTest {
      */
     @Test
     public void testGetName() {
-        System.out.println("getName");
-        Tag instance = null;
-        String expResult = "";
-        String result = instance.getName();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String expResult = "Color";
+        String result = t.getName();
+        assertEquals(result,expResult);
     }
 
     /**
@@ -50,12 +50,10 @@ public class TagTest {
      */
     @Test
     public void testSetName() {
-        System.out.println("setName");
-        String newName = "";
-        Tag instance = null;
-        instance.setName(newName);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        t.setName("Season");
+        String expResult = "Season";
+        String result = t.getName();
+        assertEquals(result,expResult);
     }
 
     /**
@@ -63,13 +61,10 @@ public class TagTest {
      */
     @Test
     public void testGetOptions() {
-        System.out.println("getOptions");
-        Tag instance = null;
-        ArrayList<String> expResult = null;
-        ArrayList<String> result = instance.getOptions();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        ArrayList<String> result = t.getOptions();
+        System.out.println(result);
+        assertTrue(result.contains("Blue"));
+        assertTrue(result.contains("Red"));
     }
 
     /**
@@ -77,12 +72,9 @@ public class TagTest {
      */
     @Test
     public void testAddOption() {
-        System.out.println("addOption");
-        String newOption = "";
-        Tag instance = null;
-        instance.addOption(newOption);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        t.addOption("Green");
+        ArrayList<String> result = t.getOptions();
+        assertTrue(result.contains("Green"));
     }
 
     /**
@@ -90,12 +82,10 @@ public class TagTest {
      */
     @Test
     public void testRemoveOption() {
-        System.out.println("removeOption");
-        String option = "";
-        Tag instance = null;
-        instance.removeOption(option);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        t.removeOption("Blue");
+        ArrayList<String> result = t.getOptions();
+        assertTrue(result.contains("Red"));
+        assertFalse(result.contains("Blue"));
     }
     
 }

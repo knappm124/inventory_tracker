@@ -12,106 +12,179 @@ import java.io.Serializable;
  *
  * @author melissa
  */
-public class Item implements Serializable {
+  
 
-    private int itemId;
-    private String name;
-    private double price;
-    private HashMap<Tag, ArrayList<String>> tags = new HashMap();
-    private int locationId;
-    private Status itemStatus;
-    private static final long serialVersionUID = 1L;
-
-    private Item(ItemBuilder builder) {
-        this.itemId = builder.itemId;
-        this.name = builder.name;
-        this.price = builder.price;
-        this.tags = builder.tags;
-        this.locationId = builder.locationId;
-        this.itemStatus = builder.itemStatus;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String setName(String newName) {
-        return name = newName;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public double setPrice(double newPrice) {
-        return price = newPrice;
-    }
-
-    public Status getStatus() {
-        return itemStatus;
-    }
-
-    public Status setStatus(Status newStatus) {
-        return itemStatus = newStatus;
-    }
-
-    public int getLocationId() {
-        return locationId;
-    }
-
-    public int setLocationId(int newLocationId) {
-        return locationId = newLocationId;
-    }
-
-    public int getItemId() {
-        return itemId;
-    }
-
-    public HashMap<Tag, ArrayList<String>> addTag(Tag t, String option) {
-        if (t.getOptions().contains(option)) {
-            if (tags.containsKey(t)) {
-                if (tags.get(t).contains(option)) {
-                    throw new IllegalArgumentException(option + " is already chosen for tag " + t);
-                } else {
-                    tags.get(t).add(option);
-                    return tags;
-                }
-            } else {
-                throw new IllegalArgumentException(t + " is not a valid tag");
-            }
-        } else {
-            throw new IllegalArgumentException("Invalid option chosen for tag " + t);
-        }
-    }
-
-    public HashMap<Tag, ArrayList<String>> removeTag(Tag t, String option) {
-        if (t.getOptions().contains(option)) {
-            if (tags.containsKey(t)) {
-                if (tags.get(t).contains(option)) {
-                    tags.get(t).remove(option);
-                    return tags;
-                } else {
-                    throw new IllegalArgumentException(option + " is not set for tag " + t);
-                }
-            } else {
-                throw new IllegalArgumentException(t + " is not a valid tag");
-            }
-        } else {
-            throw new IllegalArgumentException("Invalid option chosen for tag " + t);
-        }
-    }
-
-    public class ItemBuilder {
+    public class Item implements Serializable {
 
         private int itemId;
         private String name;
         private double price;
         private HashMap<Tag, ArrayList<String>> tags = new HashMap();
-        private int locationId;
+        private Status itemStatus;
+
+        private Item(ItemBuilder builder) {
+            this.itemId = builder.itemId;
+            this.name = builder.name;
+            this.price = builder.price;
+            this.tags = builder.tags;
+            this.itemStatus = builder.itemStatus;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String setName(String newName) {
+            return name = newName;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+
+        public double setPrice(double newPrice) {
+            return price = newPrice;
+        }
+
+        public Status getStatus() {
+            return itemStatus;
+        }
+
+        public Status setStatus(Status newStatus) {
+            return itemStatus = newStatus;
+        }
+
+        public int getItemId() {
+            return itemId;
+        }
+
+        //for testing only
+        public void setItemId(int id) {
+            itemId = id;
+        }
+        
+        public HashMap<Tag, ArrayList<String>> addTag(Tag t, String option) {
+            if (t.getOptions().contains(option)) {
+                if (tags.containsKey(t)) {
+                    if (tags.get(t).contains(option)) {
+                        throw new IllegalArgumentException(option + " is already chosen for tag " + t);
+                    } else {
+                        tags.get(t).add(option);
+                    }
+                } else {
+                    if (t.contains(option)) {
+                        ArrayList<String> s = new ArrayList<>();
+                        s.add(option);
+                        tags.put(t, s);
+                    } else {
+                        throw new IllegalArgumentException("Invalid option chosen for tag " + t);
+                    }
+                }
+            } else {
+                throw new IllegalArgumentException("Invalid option chosen for tag " + t);
+            }
+            return tags;
+        }
+
+        public HashMap<Tag, ArrayList<String>> removeOption(Tag tag, String option) {
+            for (Tag t : tags.keySet()) {
+                if (t.equals(tag)) {
+                    System.out.println(tags.get(t).contains(option));
+                    if (tags.get(t).contains(option)) {
+                        tags.get(t).remove(option);
+                        return tags;
+                    } else {
+                        throw new IllegalArgumentException(option + " is not set for tag " + tag);
+                    }
+                } else {
+                    System.out.println("Equals is false");
+                }
+            }
+            throw new IllegalArgumentException(tag + "is not a valid tag");
+        }
+    
+
+    public boolean containsTag(Tag tag) {
+        return tags.containsKey(tag);
+    }
+
+    public ArrayList<String> getOptions(String name) {
+        for(Tag t : tags.keySet()) {
+            if(t.getName().equals(name)){
+                return tags.get(t);
+            }
+        }
+        throw new IllegalArgumentException(name + " is not a valid tag");
+    }
+
+    @Override
+    public String toString() {
+        String temp = "";
+        switch (itemStatus) {
+            case Status.LISTED:
+                temp = "listed";
+                break;
+            case Status.RETURNED:
+                temp = "returned";
+                break;
+            case Status.SOLD:
+                temp = "sold";
+                break;
+            case Status.WIP:
+                temp = "in progress";
+                break;
+        }
+
+        StringBuilder sb = new StringBuilder(name);
+        sb.append(" has a price of ");
+        String cost = String.format("%.2f", price);
+        sb.append(cost);
+        sb.append(" is ");
+        sb.append(temp);
+        sb.append(" and is categorized as ");
+        for (ArrayList<String> a : tags.values()) {
+            for (String s : a) {
+                sb.append(s);
+                sb.append(", ");
+            }
+        }
+        int end = sb.length();
+        sb.delete(end - 2, end);
+
+        return sb.toString();
+    }
+    
+    @Override
+    public boolean equals(Object obj){
+        Item i = (Item) obj;
+        if(i.getStatus() == itemStatus && (i.getName().equals(name)) && i.getPrice() == price){
+            for(Tag t : tags.keySet()){
+                if(!i.containsTag(t)){
+                    return false;
+                } else {
+                    for (String s : tags.get(t)){
+                        ArrayList<String> options = i.getOptions(t.getName());
+                        if (!options.contains(s)){
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static class ItemBuilder {
+
+        private int itemId;
+        private String name;
+        private double price;
+        private HashMap<Tag, ArrayList<String>> tags = new HashMap();
         private Status itemStatus;
 
         public ItemBuilder(String name) {
-            itemId = IdMaker.newId();
             this.name = name;
         }
 
@@ -120,21 +193,16 @@ public class Item implements Serializable {
             return this;
         }
 
-        public ItemBuilder withLocation(int locationId) {
-            this.locationId = locationId;
-            return this;
-        }
-        
-        public ItemBuilder withStatus(Status itemStatus){
+        public ItemBuilder withStatus(Status itemStatus) {
             this.itemStatus = itemStatus;
             return this;
         }
-        
-        public ItemBuilder withTags(HashMap<Tag,ArrayList<String>> tags){
+
+        public ItemBuilder withTags(HashMap<Tag, ArrayList<String>> tags) {
             this.tags = tags;
             return this;
         }
-        
+
         public Item build() {
             return new Item(this);
         }

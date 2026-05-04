@@ -12,11 +12,9 @@ import java.io.Serializable;
 public class Location implements Serializable {
     private int locationId;
     private String name;
-    private static final long serialVersionUID = 1L;
     
     public Location(String name){
         this.name = name;
-        locationId = IdMaker.newId();
     }
     
     public boolean equals(Location l){
@@ -32,8 +30,12 @@ public class Location implements Serializable {
         return "Location " + locationId + ": " + name;
     }
     
-    public int getLocationId(){
+    public int getId(){
         return locationId;
+    }
+    
+    public void setId(int locationId){
+        this.locationId = locationId; 
     }
     
     public String getName() {

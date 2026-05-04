@@ -4,18 +4,29 @@
  */
 package com.knappm124.inventorytracker;
 
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  *
  * @author melissa
  */
 public class ItemTest {
+    private Item i;
+    private Tag t;
     
-    public ItemTest() {
+    @BeforeEach
+    public void setUp() {
+        i = new Item.ItemBuilder("Test Egg").withPrice(25.00).withStatus(Status.SOLD).build();
+        i.setItemId(5);
+        ArrayList<String> s = new ArrayList<>();
+        s.add("Red");
+        s.add("Blue");
+        Tag t = new Tag.TagBuilder("Color").withOptions(s).build();
+        i.addTag(t,"Blue");
     }
 
     /**
@@ -23,13 +34,9 @@ public class ItemTest {
      */
     @Test
     public void testGetName() {
-        System.out.println("getName");
-        Item instance = null;
-        String expResult = "";
-        String result = instance.getName();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String result = i.getName();
+        String expResult = "Test Egg";
+        assertEquals(result,expResult);
     }
 
     /**
@@ -37,14 +44,10 @@ public class ItemTest {
      */
     @Test
     public void testSetName() {
-        System.out.println("setName");
-        String newName = "";
-        Item instance = null;
-        String expResult = "";
-        String result = instance.setName(newName);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        i.setName("Bird Egg");
+        String result = i.getName();
+        String expResult = "Bird Egg";
+        assertEquals(result,expResult);
     }
 
     /**
@@ -52,13 +55,9 @@ public class ItemTest {
      */
     @Test
     public void testGetPrice() {
-        System.out.println("getPrice");
-        Item instance = null;
-        double expResult = 0.0;
-        double result = instance.getPrice();
-        assertEquals(expResult, result, 0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String result = String.format("%.2f", i.getPrice());
+        String expResult = "25.00";
+        assertEquals(result,expResult);
     }
 
     /**
@@ -66,14 +65,10 @@ public class ItemTest {
      */
     @Test
     public void testSetPrice() {
-        System.out.println("setPrice");
-        double newPrice = 0.0;
-        Item instance = null;
-        double expResult = 0.0;
-        double result = instance.setPrice(newPrice);
-        assertEquals(expResult, result, 0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        i.setPrice(30.00);
+        String result = String.format("%.2f", i.getPrice());
+        String expResult = "30.00";
+        assertEquals(result,expResult);
     }
 
     /**
@@ -81,13 +76,9 @@ public class ItemTest {
      */
     @Test
     public void testGetStatus() {
-        System.out.println("getStatus");
-        Item instance = null;
-        Status expResult = null;
-        Status result = instance.getStatus();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Status result = i.getStatus();
+        Status expResult = Status.SOLD;
+        assertEquals(result,expResult);
     }
 
     /**
@@ -95,57 +86,21 @@ public class ItemTest {
      */
     @Test
     public void testSetStatus() {
-        System.out.println("setStatus");
-        Status newStatus = null;
-        Item instance = null;
-        Status expResult = null;
-        Status result = instance.setStatus(newStatus);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        i.setStatus(Status.WIP);
+        Status result = i.getStatus();
+        Status expResult = Status.WIP;
+        assertEquals(result,expResult);
     }
 
-    /**
-     * Test of getLocationId method, of class Item.
-     */
-    @Test
-    public void testGetLocationId() {
-        System.out.println("getLocationId");
-        Item instance = null;
-        int expResult = 0;
-        int result = instance.getLocationId();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setLocationId method, of class Item.
-     */
-    @Test
-    public void testSetLocationId() {
-        System.out.println("setLocationId");
-        int newLocationId = 0;
-        Item instance = null;
-        int expResult = 0;
-        int result = instance.setLocationId(newLocationId);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
     /**
      * Test of getItemId method, of class Item.
      */
     @Test
     public void testGetItemId() {
-        System.out.println("getItemId");
-        Item instance = null;
-        int expResult = 0;
-        int result = instance.getItemId();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int result = i.getItemId();
+        int expResult = 5;
+        assertEquals(result,expResult);
     }
 
     /**
@@ -153,31 +108,36 @@ public class ItemTest {
      */
     @Test
     public void testAddTag() {
-        System.out.println("addTag");
-        Tag t = null;
-        String option = "";
-        Item instance = null;
-        HashMap<Tag, ArrayList<String>> expResult = null;
-        HashMap<Tag, ArrayList<String>> result = instance.addTag(t, option);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        ArrayList<String> s = new ArrayList<>();
+        s.add("Easter");
+        s.add("Christmas");
+        Tag testTag = new Tag.TagBuilder("Season").withOptions(s).build();
+        i.addTag(testTag,"Easter");
+        assertTrue(i.containsTag(testTag));
     }
 
     /**
      * Test of removeTag method, of class Item.
      */
     @Test
-    public void testRemoveTag() {
-        System.out.println("removeTag");
-        Tag t = null;
-        String option = "";
-        Item instance = null;
-        HashMap<Tag, ArrayList<String>> expResult = null;
-        HashMap<Tag, ArrayList<String>> result = instance.removeTag(t, option);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testRemoveOption() {
+        ArrayList<String> s = new ArrayList<>();
+        s.add("Red");
+        s.add("Blue");
+        Tag testTag = new Tag.TagBuilder("Color").withOptions(s).build();
+        i.removeOption(testTag,"Blue");
+        s = i.getOptions("Color");
+        assertFalse(s.contains("Blue"));
+    }
+
+    /**
+     * Test of toString method, of class Item.
+     */
+    @Test
+    public void testToString() {
+        String result = i.toString();
+        String expResult = "Test Egg has a price of 25.00 is sold and is categorized as Blue";
+        assertEquals(result,expResult);
     }
     
 }

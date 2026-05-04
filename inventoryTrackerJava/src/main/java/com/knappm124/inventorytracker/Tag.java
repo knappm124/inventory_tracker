@@ -5,6 +5,7 @@
 package com.knappm124.inventorytracker;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  *
@@ -22,6 +23,10 @@ public class Tag {
         this.options = builder.options;
     }
 
+    public void setTagId(int tagId){
+        this.tagId = tagId;
+    }
+    
     public int getTagId() {
         return tagId;
     }
@@ -36,6 +41,41 @@ public class Tag {
 
     public ArrayList<String> getOptions() {
         return options;
+    }
+    
+    @Override
+    public boolean equals(Object obj){
+        Tag t = (Tag) obj;
+        return name.equals(t.getName()) && options.equals(t.getOptions());
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.name);
+        hash = 53 * hash + Objects.hashCode(this.options);
+        return hash;
+    }
+    
+    public boolean equals(Tag t){
+        ArrayList<String> s = t.getOptions();
+        if(s.size() != options.size()){
+            return false;
+        }
+        if(t.getName().equals(name)){
+            for(String a : s){
+                if (!t.contains(a)){
+                    return false;
+                }
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean contains(String option){
+        return options.contains(option);
     }
 
     public void addOption(String newOption) {
@@ -61,7 +101,6 @@ public class Tag {
         private ArrayList<String> options;
         
         public TagBuilder(String name){
-            tagId = IdMaker.newId();
             this.name = name;
             this.options = new ArrayList();
         }

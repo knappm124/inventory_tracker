@@ -6,28 +6,29 @@ package com.knappm124.inventorytracker;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeAll;
 
 /**
  *
  * @author melissa
  */
 public class LocationTest {
+    private static Location l;
     
-    public LocationTest() {
+    @BeforeAll
+    public static void globalSetUp(){
+        l = new Location("General Store");
+        l.setId(256);
     }
 
     /**
      * Test of getLocationId method, of class Location.
      */
     @Test
-    public void testGetLocationId() {
-        System.out.println("getLocationId");
-        Location instance = null;
-        int expResult = 0;
-        int result = instance.getLocationId();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testGetId() {
+        int result = l.getId();
+        int expResult = 256;
+        assertEquals(result,expResult);
     }
 
     /**
@@ -35,13 +36,10 @@ public class LocationTest {
      */
     @Test
     public void testGetName() {
-        System.out.println("getName");
-        Location instance = null;
-        String expResult = "";
-        String result = instance.getName();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        l.setName("Home");
+        String result = l.getName();
+        String expResult = "Home";
+        assertEquals(result,expResult);
     }
 
     /**
@@ -49,12 +47,13 @@ public class LocationTest {
      */
     @Test
     public void testSetName() {
-        System.out.println("setName");
-        String newName = "";
-        Location instance = null;
-        instance.setName(newName);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String result = l.getName();
+        String expResult = "Home";
+        assertEquals(result,expResult);
+        l.setName("Etsy");
+        expResult = "Etsy";
+        result = l.getName();
+        assertEquals(result,expResult);
     }
     
 }

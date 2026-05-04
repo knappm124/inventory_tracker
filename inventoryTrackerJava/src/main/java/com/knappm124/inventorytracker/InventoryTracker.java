@@ -11,6 +11,6 @@ package com.knappm124.inventorytracker;
 public class InventoryTracker {
 
     public static void main(String[] args) {
-        IdMaker.updateCounter();
+        String connectionString = "mongodb+srv://knappm124_db_user:SD68zIIbNfjPVs1p@inventorycluster.s4b0m91.mongodb.net/?appName=InventoryCluster";
     }
 }
