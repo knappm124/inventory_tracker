@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
   
 
-    public class Item implements Serializable {
+    public class Item {
 
         private int itemId;
         private String name;

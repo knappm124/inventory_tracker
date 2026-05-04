@@ -9,7 +9,7 @@ import java.io.Serializable;
  *
  * @author melissa
  */
-public class Location implements Serializable {
+public class Location {
     private int locationId;
     private String name;
     

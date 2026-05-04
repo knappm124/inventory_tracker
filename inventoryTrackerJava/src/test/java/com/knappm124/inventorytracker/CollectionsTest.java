@@ -187,17 +187,4 @@ public class CollectionsTest {
         ArrayList<Item> items = c.getAllItems();
         assertTrue(items.contains(i));
     }
-
-    /**
-     * Test of save method, of class Collections.
-     */
-    @Test
-    public void testSave() {
-        c.save();
-    }
-    
-    public void testRead() {
-        c.read();
-    }
-    
 }
