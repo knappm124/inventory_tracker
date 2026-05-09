@@ -6,7 +6,6 @@ package com.knappm124.inventorytracker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.io.Serializable;
 
 /**
  *

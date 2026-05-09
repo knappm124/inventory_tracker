@@ -5,12 +5,6 @@
 package com.knappm124.inventorytracker;
 
 import java.util.ArrayList;
-import java.io.Serializable;
-import java.io.FileInputStream;
-import java.io.ObjectOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 
 
 /**
@@ -21,7 +15,6 @@ public class Collections {
     ArrayList<Location> locations;
     ArrayList<Tag> tags;
     ArrayList<Item> items;
-    private static final long serialVersionUID = 1L;
     
     public Collections() {
         locations = new ArrayList();
