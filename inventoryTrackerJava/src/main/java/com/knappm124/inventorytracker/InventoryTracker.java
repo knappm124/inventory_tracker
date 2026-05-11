@@ -15,11 +15,9 @@ public class InventoryTracker {
         uri = uri + System.getenv("DBUSR");
         uri = uri + System.getenv("DBPWD");
         uri = uri + System.getenv("DBCLSTR");
-        
-        Location l = new Location("General Store");
+       
         
         DatabaseConnector dc = new DatabaseConnector(uri);
-        dc.updateCollection(l);
         dc.getCollection();
         dc.print();
     }
