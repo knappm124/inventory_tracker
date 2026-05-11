@@ -55,6 +55,15 @@ public class Collections {
         return tags;
     }
     
+    public Tag getTag(String tag_id){
+        for(var tag : tags) {
+            if(tag.getTagId().equals(tag_id)){
+                return tag;
+            }
+        }
+        throw new IllegalArgumentException("Location doesn't exist");
+    }
+    
     public ArrayList<Tag> addTag(Tag t) {
         for (var tag : tags){
             if(tag.getName().equals(t.getName())){
@@ -85,9 +94,9 @@ public class Collections {
         throw new IllegalArgumentException("Item with id " + oldItem.getItemId() + " does not exist");
     }
     
-    public Item getItem(int itemId){
+    public Item getItem(String itemId){
         for(Item i : items){
-            if(i.getItemId() == itemId){
+            if(i.getItemId().equals(itemId)){
                 return i;
             }
         }

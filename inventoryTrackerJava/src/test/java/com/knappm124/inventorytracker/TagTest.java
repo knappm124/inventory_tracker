@@ -22,7 +22,7 @@ public class TagTest {
         options.add("Blue");
         options.add("Red");
         t = new Tag.TagBuilder("Color").withOptions(options).build();
-        t.setTagId(326);
+        t.setTagId("326");
     }
 
     /**
@@ -30,8 +30,8 @@ public class TagTest {
      */
     @Test
     public void testGetTagId() {
-        int expResult = 326;
-        int result = t.getTagId();
+        String expResult = "326";
+        String result = t.getTagId();
         assertEquals(result,expResult);
     }
 

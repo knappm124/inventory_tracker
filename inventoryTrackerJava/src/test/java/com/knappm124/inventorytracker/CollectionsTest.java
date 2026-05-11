@@ -33,11 +33,11 @@ public class CollectionsTest {
         c.addTag(t2);
         
         Item i = new Item.ItemBuilder("Test Egg").withPrice(5.00).build();
-        i.setItemId(256);
+        i.setItemId("256");
         c.addItem(i);
         
         Item i2 = new Item.ItemBuilder("Chicken Egg").withPrice(10.00).build();
-        i2.setItemId(526);
+        i2.setItemId("526");
         c.addItem(i2);
     }
 
@@ -147,7 +147,7 @@ public class CollectionsTest {
      */
     @Test
     public void testGetItem() {
-        Item i = c.getItem(256);
+        Item i = c.getItem("256");
         String result = i.getName();
         String expResult = "Test Egg";
         Double result2 = i.getPrice();
@@ -163,12 +163,12 @@ public class CollectionsTest {
     public void testGetAllItems() {
         ArrayList<Item> items = c.getAllItems();
         for(Item i : items){
-            if(i.getItemId() == 256){
+            if("256".equals(i.getItemId())){
                 String expResult = "Test Egg";
                 assertEquals(i.getName(),expResult);
                 double expResult2 = 5.00;
                 assertEquals(i.getPrice(),expResult2);
-            } else if(i.getItemId() == 526){
+            } else if("526".equals(i.getItemId())){
                 String expResult = "Chicken Egg";
                 assertEquals(i.getName(),expResult);
                 double expResult2 = 10.00;

@@ -15,7 +15,7 @@ import java.util.HashMap;
 
     public class Item {
 
-        private int itemId;
+        private String itemId;
         private String name;
         private double price;
         private HashMap<Tag, ArrayList<String>> tags = new HashMap();
@@ -55,12 +55,12 @@ import java.util.HashMap;
             return itemStatus = newStatus;
         }
 
-        public int getItemId() {
+        public String getItemId() {
             return itemId;
         }
 
         //for testing only
-        public void setItemId(int id) {
+        public void setItemId(String id) {
             itemId = id;
         }
         
@@ -187,7 +187,7 @@ import java.util.HashMap;
 
     public static class ItemBuilder {
 
-        private int itemId;
+        private String itemId;
         private String name;
         private double price;
         private HashMap<Tag, ArrayList<String>> tags = new HashMap();

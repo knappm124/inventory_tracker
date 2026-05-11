@@ -13,7 +13,7 @@ import java.util.Objects;
  */
 public class Tag {
 
-    private int tagId;
+    private String tagId;
     private String name;
     private final ArrayList<String> options;
 
@@ -23,11 +23,11 @@ public class Tag {
         this.options = builder.options;
     }
 
-    public void setTagId(int tagId){
+    public void setTagId(String tagId){
         this.tagId = tagId;
     }
     
-    public int getTagId() {
+    public String getTagId() {
         return tagId;
     }
 
@@ -57,23 +57,6 @@ public class Tag {
         return hash;
     }
     
-    public boolean equals(Tag t){
-        ArrayList<String> s = t.getOptions();
-        if(s.size() != options.size()){
-            return false;
-        }
-        if(t.getName().equals(name)){
-            for(String a : s){
-                if (!t.contains(a)){
-                    return false;
-                }
-            }
-        } else {
-            return false;
-        }
-        return true;
-    }
-    
     public boolean contains(String option){
         return options.contains(option);
     }
@@ -88,15 +71,30 @@ public class Tag {
 
     public void removeOption(String option) {
         if (options.indexOf(option) == -1) {
-            throw new IllegalArgumentException("This option does not exist");
+            throw new IllegalArgumentException("This option does not exist for this tag");
         } else {
             options.remove(option);
         }
     }
+    
+    @Override
+    public String toString(){
+        String tag = "Tag ";
+        tag = tag + tagId;
+        tag = tag + " is called ";
+        tag = tag + name;
+        tag = tag + " and has options: ";
+        for(String s : options){
+            tag = tag + s;
+            tag = tag + ", ";
+        }
+        tag = tag.substring(0,tag.length() -2);
+        return tag;
+    }
 
     public static class TagBuilder {
 
-        private int tagId;
+        private String tagId;
         private String name;
         private ArrayList<String> options;
         

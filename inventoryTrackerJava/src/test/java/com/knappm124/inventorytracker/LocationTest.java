@@ -18,7 +18,7 @@ public class LocationTest {
     @BeforeAll
     public static void globalSetUp(){
         l = new Location("General Store");
-        l.setId(256);
+        l.setId("256");
     }
 
     /**
@@ -26,8 +26,8 @@ public class LocationTest {
      */
     @Test
     public void testGetId() {
-        int result = l.getId();
-        int expResult = 256;
+        String result = l.getId();
+        String expResult = "256";
         assertEquals(result,expResult);
     }
 

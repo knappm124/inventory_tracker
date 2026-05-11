@@ -21,7 +21,7 @@ public class ItemTest {
     @BeforeEach
     public void setUp() {
         i = new Item.ItemBuilder("Test Egg").withPrice(25.00).withStatus(Status.SOLD).build();
-        i.setItemId(5);
+        i.setItemId("5");
         ArrayList<String> s = new ArrayList<>();
         s.add("Red");
         s.add("Blue");
@@ -98,8 +98,8 @@ public class ItemTest {
      */
     @Test
     public void testGetItemId() {
-        int result = i.getItemId();
-        int expResult = 5;
+        String result = i.getItemId();
+        String expResult = "5";
         assertEquals(result,expResult);
     }
 

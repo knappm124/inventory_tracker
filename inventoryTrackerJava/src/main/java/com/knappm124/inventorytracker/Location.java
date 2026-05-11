@@ -9,7 +9,7 @@ package com.knappm124.inventorytracker;
  * @author melissa
  */
 public class Location {
-    private int locationId;
+    private String locationId;
     private String name;
     
     public Location(String name){
@@ -17,7 +17,7 @@ public class Location {
     }
     
     public boolean equals(Location l){
-       if(l.locationId == locationId){
+       if(l.locationId.contains(locationId)){
            return l.name.equals(name);
        } else {
            return false;
@@ -29,11 +29,11 @@ public class Location {
         return "Location " + locationId + ": " + name;
     }
     
-    public int getId(){
+    public String getId(){
         return locationId;
     }
     
-    public void setId(int locationId){
+    public void setId(String locationId){
         this.locationId = locationId; 
     }
     
