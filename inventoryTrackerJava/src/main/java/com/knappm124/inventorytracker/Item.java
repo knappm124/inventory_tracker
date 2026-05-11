@@ -109,6 +109,10 @@ import java.util.HashMap;
         return tags.containsKey(tag);
     }
 
+    public HashMap<Tag,ArrayList<String>> getTags(){
+        return tags;
+    }
+    
     public ArrayList<String> getOptions(String name) {
         for(Tag t : tags.keySet()) {
             if(t.getName().equals(name)){
