@@ -5,6 +5,9 @@
 package com.knappm124.inventorytracker;
 
 
+import com.knappm124.inventorytracker.collections.Tag;
+import com.knappm124.inventorytracker.collections.Status;
+import com.knappm124.inventorytracker.collections.Item;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

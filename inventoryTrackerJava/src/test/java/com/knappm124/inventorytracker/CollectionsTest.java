@@ -4,6 +4,10 @@
  */
 package com.knappm124.inventorytracker;
 
+import com.knappm124.inventorytracker.collections.Tag;
+import com.knappm124.inventorytracker.collections.Collections;
+import com.knappm124.inventorytracker.collections.Location;
+import com.knappm124.inventorytracker.collections.Item;
 import java.util.ArrayList;
 import java.lang.IllegalArgumentException;
 import java.util.List;

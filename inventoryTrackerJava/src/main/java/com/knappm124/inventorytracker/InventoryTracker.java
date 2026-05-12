@@ -3,6 +3,8 @@
  */
 package com.knappm124.inventorytracker;
 
+import com.knappm124.inventorytracker.database.DatabaseConnector;
+
 /**
  *
  * @author melissa
@@ -15,7 +17,6 @@ public class InventoryTracker {
         uri = uri + System.getenv("DBUSR");
         uri = uri + System.getenv("DBPWD");
         uri = uri + System.getenv("DBCLSTR");
-       
         
         DatabaseConnector dc = new DatabaseConnector(uri);
         dc.getCollection();

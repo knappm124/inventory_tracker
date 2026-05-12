@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.knappm124.inventorytracker;
+package com.knappm124.inventorytracker.collections;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -209,6 +209,12 @@ import java.util.HashMap;
 
         public ItemBuilder withStatus(Status itemStatus) {
             this.itemStatus = itemStatus;
+            return this;
+        }
+        
+        public ItemBuilder withStatus(String status){
+            status = status.toUpperCase();
+            this.itemStatus = Status.valueOf(status);
             return this;
         }
 
