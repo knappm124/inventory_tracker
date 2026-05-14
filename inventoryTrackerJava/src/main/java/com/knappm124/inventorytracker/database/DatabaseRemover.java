@@ -4,8 +4,7 @@
  */
 package com.knappm124.inventorytracker.database;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
+
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
@@ -27,7 +26,7 @@ public class DatabaseRemover {
     public void remove(String type, String id){
         ObjectId oid = new ObjectId(id);
         MongoCollection<Document> collec = database.getCollection(type);
-        Bson filter = Filters.eq("_id", oid);
+        Bson filter = Filters.eq("_id",oid);
         collec.deleteOne(filter);
 
     }

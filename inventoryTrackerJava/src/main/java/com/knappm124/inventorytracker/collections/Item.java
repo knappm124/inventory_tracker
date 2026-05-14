@@ -20,7 +20,7 @@ import java.util.HashMap;
         private double price;
         private HashMap<Tag, ArrayList<String>> tags = new HashMap();
         private Status itemStatus;
-        private String imgSrc;
+//        private String imgSrc;
 
         private Item(ItemBuilder builder) {
             this.itemId = builder.itemId;
@@ -28,7 +28,7 @@ import java.util.HashMap;
             this.price = builder.price;
             this.tags = builder.tags;
             this.itemStatus = builder.itemStatus;
-            this.imgSrc = builder.imgSrc;
+//            this.imgSrc = builder.imgSrc;
         }
 
         public String getName() {
@@ -122,13 +122,13 @@ import java.util.HashMap;
         throw new IllegalArgumentException(name + " is not a valid tag");
     }
     
-    public String getImage(){
-        return imgSrc;
-    }
-    
-    public void setImage(String imgSrc){
-        this.imgSrc = imgSrc;
-    }
+//    public String getImage(){
+//        return imgSrc;
+//    }
+//    
+//    public void setImage(String imgSrc){
+//        this.imgSrc = imgSrc;
+//    }
 
     @Override
     public String toString() {

@@ -8,21 +8,7 @@ import com.knappm124.inventorytracker.collections.Collections;
 import com.knappm124.inventorytracker.collections.Item;
 import com.knappm124.inventorytracker.collections.Location;
 import com.knappm124.inventorytracker.collections.Tag;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
-import static com.mongodb.client.model.Updates.combine;
-import static com.mongodb.client.model.Updates.set;
-import com.mongodb.client.result.InsertOneResult;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import org.bson.Document;
-import org.bson.conversions.Bson;
-import org.bson.types.ObjectId;
 
 /**
  *
@@ -30,7 +16,7 @@ import org.bson.types.ObjectId;
  */
 public class DatabaseConnector {
 
-    private final Collections collections;
+    private Collections collections;
     private final DatabaseRemover dbremover;
     private final DatabaseAdder dbadder;
     private final DatabaseUpdater dbupdater;
@@ -44,8 +30,8 @@ public class DatabaseConnector {
         dbgetter = new DatabaseGetter(database);
     }
 
-    public Collections getCollection() {
-        return dbgetter.get();
+    public void getCollection() {
+        collections = dbgetter.get();
     }
     
     public Object get(String id){
@@ -65,7 +51,7 @@ public class DatabaseConnector {
         switch (obj) {
             case Location l -> dbupdater.update("locations",l.getId(),obj2);
             case Item i -> dbupdater.update("items",i.getItemId(),obj2);
-            case Tag t -> dbupdater.update("tag",t.getTagId(),obj2);
+            case Tag t -> dbupdater.update("tags",t.getTagId(),obj2);
             default -> throw new IllegalArgumentException("Object is not of valid type");
         }
     }
