@@ -4,10 +4,20 @@
  */
 package com.knappm124.inventorytracker.database;
 
+import com.mongodb.client.MongoDatabase;
+
 /**
  *
  * @author melissa
  */
 public class DatabaseUpdater {
+    private final MongoDatabase database;
     
+    public DatabaseUpdater(MongoDatabase database){
+        this.database = database;
+    }
+    
+    public void update(String type, String id, Object obj){
+        
+    }
 }

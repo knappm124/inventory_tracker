@@ -18,21 +18,17 @@ import org.bson.types.ObjectId;
  * @author melissa
  */
 public class DatabaseRemover {
-    private final String uri;
+    private final MongoDatabase database;
     
-    public DatabaseRemover(String uri){
-        this.uri = uri;
+    public DatabaseRemover(MongoDatabase database){
+        this.database = database;
     }
     
     public void remove(String type, String id){
         ObjectId oid = new ObjectId(id);
-        try (MongoClient mongoClient = MongoClients.create(uri)) {
-            MongoDatabase database = mongoClient.getDatabase("Inventory");
-            MongoCollection<Document> collec = database.getCollection(type);
-            Bson filter = Filters.eq("_id", oid);
-            collec.deleteOne(filter);
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
-        }
+        MongoCollection<Document> collec = database.getCollection(type);
+        Bson filter = Filters.eq("_id", oid);
+        collec.deleteOne(filter);
+
     }
 }

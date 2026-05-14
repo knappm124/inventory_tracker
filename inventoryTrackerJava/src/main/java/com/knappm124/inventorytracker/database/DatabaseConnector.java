@@ -30,20 +30,18 @@ import org.bson.types.ObjectId;
  */
 public class DatabaseConnector {
 
-    private final String uri;
     private final Collections collections;
     private final DatabaseRemover dbremover;
     private final DatabaseAdder dbadder;
     private final DatabaseUpdater dbupdater;
     private final DatabaseGetter dbgetter;
 
-    public DatabaseConnector(String uri) {
-        this.uri = uri;
+    public DatabaseConnector(MongoDatabase database) {
         collections = new Collections();
-        dbremover = new DatabaseRemover(uri);
-        dbadder = new DatabaseAdder();
-        dbupdater = new DatabaseUpdater();
-        dbgetter = new DatabaseGetter(uri);
+        dbremover = new DatabaseRemover(database);
+        dbadder = new DatabaseAdder(database);
+        dbupdater = new DatabaseUpdater(database);
+        dbgetter = new DatabaseGetter(database);
     }
 
     public Collections getCollection() {
@@ -54,123 +52,21 @@ public class DatabaseConnector {
         return dbgetter.get(id);
     }
    
-
-    
-    public void addTag(Tag t) {
-        String name = t.getName();
-        ArrayList<String> options = t.getOptions();
-        Document doc = new Document("name", name);
-        doc.append("options", options);
-
-        try (MongoClient mongoClient = MongoClients.create(uri)) {
-            MongoDatabase database = mongoClient.getDatabase("Inventory");
-            MongoCollection<Document> collec = database.getCollection("tags");
-            InsertOneResult result = collec.insertOne(doc);
-            String id = result.getInsertedId().toString();
-            t.setTagId(id);
-            collections.addTag(t);
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
+    public void add(Object obj){
+        switch (obj) {
+            case Location l -> dbadder.add("locations",l.getId());
+            case Item i -> dbadder.add("items",i.getItemId());
+            case Tag t -> dbadder.add("tag",t.getTagId());
+            default -> throw new IllegalArgumentException("Object is not of valid type");
         }
     }
-
-    public void addItem(Item i) {
-        Document doc = new Document("name", i.getName());
-        doc.append("price", i.getPrice());
-        doc.append("status", i.getStatus());
-        //doc.append("imgSrc",i.getImage());
-        HashMap<Tag, ArrayList<String>> tags = i.getTags();
-        ArrayList<Document> docs = new ArrayList<>();
-        for (Map.Entry<Tag, ArrayList<String>> e : tags.entrySet()) {
-            String id = e.getKey().getTagId();
-            ArrayList<String> options = e.getValue();
-            for (String s : options) {
-                Document d2 = new Document(id, s);
-                docs.add(d2);
-            }
-        }
-        doc.append("tags", Arrays.asList(docs));
-
-        try (MongoClient mongoClient = MongoClients.create(uri)) {
-            MongoDatabase database = mongoClient.getDatabase("Inventory");
-            MongoCollection<Document> collec = database.getCollection("items");
-            InsertOneResult result = collec.insertOne(doc);
-            String id = result.getInsertedId().toString();
-            i.setItemId(id);
-            collections.addItem(i);
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
-        }
-    }
-    
-        public void addLocation(Location l) {
-        String name = l.getName();
-        Document doc = new Document("name", name);
-
-        try (MongoClient mongoClient = MongoClients.create(uri)) {
-            MongoDatabase database = mongoClient.getDatabase("Inventory");
-            MongoCollection<Document> collec = database.getCollection("locations");
-            InsertOneResult result = collec.insertOne(doc);
-            String id = result.getInsertedId().toString();
-            l.setId(id);
-            collections.addLocation(l);
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
-        }
-    }
-    
-    public void updateTag(Tag t){
-        Bson update = combine(set("name", t.getName()),set("options",t.getOptions()));
-        String id = t.getTagId();
-        ObjectId oid = new ObjectId(id);
-        try (MongoClient mongoClient = MongoClients.create(uri)) {
-            MongoDatabase database = mongoClient.getDatabase("Inventory");
-            MongoCollection<Document> collec = database.getCollection("tags");
-            Bson filter = Filters.eq("_id", oid);
-            collec.updateOne(filter, update);
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
-        }
-    }
-    
-    public void updateItem(Item i){
-        String id = i.getItemId();
-        ArrayList<Document> docs = new ArrayList<>();
-        for (Map.Entry<Tag, ArrayList<String>> e : i.getTags().entrySet()) {
-            String tagId = e.getKey().getTagId();
-            ArrayList<String> options = e.getValue();
-            for (String s : options) {
-                Document d2 = new Document(tagId, s);
-                docs.add(d2);
-            }
-        }
-        Bson update = combine(set("name",i.getName()),
-                set("status",i.getStatus()),
-                set("price",i.getPrice()),
-                //set("imgSrc,i.getImage())
-                set("tags",docs));
-        ObjectId oid = new ObjectId(id);
-        try (MongoClient mongoClient = MongoClients.create(uri)) {
-            MongoDatabase database = mongoClient.getDatabase("Inventory");
-            MongoCollection<Document> collec = database.getCollection("locations");
-            Bson filter = Filters.eq("_id", oid);
-            collec.updateOne(filter, update);
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
-        }
-    }
-    
-    public void updateLocation(Location l){
-        Bson update = set("name", l.getName());
-        String id = l.getId();
-        ObjectId oid = new ObjectId(id);
-        try (MongoClient mongoClient = MongoClients.create(uri)) {
-            MongoDatabase database = mongoClient.getDatabase("Inventory");
-            MongoCollection<Document> collec = database.getCollection("tags");
-            Bson filter = Filters.eq("_id", oid);
-            collec.updateOne(filter, update);
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
+  
+    public void update(Object obj, Object obj2){
+        switch (obj) {
+            case Location l -> dbupdater.update("locations",l.getId(),obj2);
+            case Item i -> dbupdater.update("items",i.getItemId(),obj2);
+            case Tag t -> dbupdater.update("tag",t.getTagId(),obj2);
+            default -> throw new IllegalArgumentException("Object is not of valid type");
         }
     }
 
