@@ -44,10 +44,10 @@ public class InventoryTracker {
             MongoClient mc = MongoClients.create(uri);
             MongoDatabase database = mc.getDatabase("Inventory");
             DatabaseConnector dc = new DatabaseConnector(database);
-            dc.getCollection();
-            dc.update(t2, t);
-            dc.getCollection();
-            dc.print();
+            dc.execute("GETALL");
+            dc.execute("UPDATE",t2, t);
+            dc.execute("GETALL");
+            dc.execute("PRINT");
         } catch (Exception e){
             System.out.println(e.getMessage());
         }

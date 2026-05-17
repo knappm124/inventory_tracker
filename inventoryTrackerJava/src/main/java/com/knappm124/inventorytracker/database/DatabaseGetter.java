@@ -103,7 +103,7 @@ public class DatabaseGetter {
         }
     }
 
-    public Object getHelper(String type, String id) {
+    private Object getHelper(String type, String id) {
         MongoCollection<Document> collec = database.getCollection(type);
         FindIterable<Document> docs = collec.find();
         for (Document d : docs) {
