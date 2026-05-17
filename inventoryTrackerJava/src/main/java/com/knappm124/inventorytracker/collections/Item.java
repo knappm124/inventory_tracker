@@ -222,11 +222,11 @@ import java.util.HashMap;
             this.tags = tags;
             return this;
         }
-        
-        public ItemBuilder withImage(String imSrc){
-            this.imgSrc = imgSrc;
-            return this;
-        }
+//        
+//        public ItemBuilder withImage(String imSrc){
+//            this.imgSrc = imgSrc;
+//            return this;
+//        }
 
         public Item build() {
             return new Item(this);
