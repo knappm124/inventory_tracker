@@ -4,6 +4,7 @@
  */
 package com.knappm124.inventorytracker.collections;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,20 +14,23 @@ import java.util.HashMap;
  */
   
 
-    public class Item {
+    public class Item implements Serializable {
 
         private String itemId;
         private String name;
         private double price;
         private HashMap<Tag, ArrayList<String>> tags = new HashMap();
         private Status itemStatus;
+        private String locationId;
 //        private String imgSrc;
+        private static final long serialVersionUID = 1L;
 
         private Item(ItemBuilder builder) {
             this.itemId = builder.itemId;
             this.name = builder.name;
             this.price = builder.price;
             this.tags = builder.tags;
+            this.locationId = locationId;
             this.itemStatus = builder.itemStatus;
 //            this.imgSrc = builder.imgSrc;
         }
@@ -62,6 +66,14 @@ import java.util.HashMap;
         //for testing only
         public void setItemId(String id) {
             itemId = id;
+        }
+        
+        public String getLocationId(){
+            return locationId;
+        }
+        
+        public void setLocationId(String locationId){
+            this.locationId = locationId;
         }
         
         public HashMap<Tag, ArrayList<String>> addTag(Tag t, String option) {
@@ -196,7 +208,8 @@ import java.util.HashMap;
         private double price;
         private HashMap<Tag, ArrayList<String>> tags = new HashMap();
         private Status itemStatus;
-        private String imgSrc;
+        //private String imgSrc;
+        private String locationId;
 
         public ItemBuilder(String name) {
             this.name = name;
@@ -227,6 +240,11 @@ import java.util.HashMap;
 //            this.imgSrc = imgSrc;
 //            return this;
 //        }
+        
+        public ItemBuilder withLocationId(String locationId){
+            this.locationId = locationId;
+            return this;
+        }
 
         public Item build() {
             return new Item(this);

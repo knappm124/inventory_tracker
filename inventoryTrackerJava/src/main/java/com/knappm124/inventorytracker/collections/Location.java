@@ -4,13 +4,16 @@
  */
 package com.knappm124.inventorytracker.collections;
 
+import java.io.Serializable;
+
 /**
  *
  * @author melissa
  */
-public class Location {
+public class Location implements Serializable{
     private String locationId;
     private String name;
+    private static final long serialVersionUID = 1L;
     
     public Location(String name){
         this.name = name;
@@ -33,15 +36,17 @@ public class Location {
         return locationId;
     }
     
-    public void setId(String locationId){
+    public Location setId(String locationId){
         this.locationId = locationId; 
+        return this;
     }
     
     public String getName() {
         return name;
     }
     
-    public void setName(String newName) {
+    public Location setName(String newName) {
         name = newName;
+        return this;
     }
 }

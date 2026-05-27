@@ -4,6 +4,7 @@
  */
 package com.knappm124.inventorytracker.collections;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -11,11 +12,12 @@ import java.util.Objects;
  *
  * @author melissa
  */
-public class Tag {
+public class Tag implements Serializable {
 
     private String tagId;
     private String name;
     private final ArrayList<String> options;
+    private static final long serialVersionUID = 1L;
 
     private Tag(TagBuilder builder) {
         this.tagId = builder.tagId;
