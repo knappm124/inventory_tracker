@@ -14,6 +14,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 import org.bson.Document;
 
 /**
@@ -38,7 +39,7 @@ public class DatabaseGetter {
             String name = (String) d.get("name");
             ArrayList<String> options = (ArrayList) d.get("options");
             Tag t = new Tag.TagBuilder(name).withOptions(options).build();
-            t.setTagId(tag_id);
+            t.setTagId(UUID.fromString(tag_id));
             collections.addTag(t);
         }
 
@@ -74,7 +75,7 @@ public class DatabaseGetter {
                     .withStatus(Status.valueOf(status.toUpperCase()))
                     //.withImage(imgSrc)
                     .withTags(tag).build();
-            i.setItemId(itemId);
+            i.setItemId(UUID.fromString(itemId));
             collections.addItem(i);
         }
 
@@ -84,7 +85,7 @@ public class DatabaseGetter {
             String name = (String) d.get("name");
             String id = d.get("_id").toString();
             Location l = new Location(name);
-            l.setId(id);
+            l.setId(UUID.fromString(id));
             collections.addLocation(l);
         }
 

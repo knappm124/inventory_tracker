@@ -8,6 +8,7 @@ package com.knappm124.inventorytracker.database;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import java.util.UUID;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
@@ -23,8 +24,8 @@ public class DatabaseRemover {
         this.database = database;
     }
     
-    public void remove(String type, String id){
-        ObjectId oid = new ObjectId(id);
+    public void remove(String type, UUID id){
+        ObjectId oid = new ObjectId(id.toString());
         MongoCollection<Document> collec = database.getCollection(type);
         Bson filter = Filters.eq("_id",oid);
         collec.deleteOne(filter);

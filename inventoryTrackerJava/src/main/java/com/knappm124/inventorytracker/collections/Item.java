@@ -6,6 +6,7 @@ package com.knappm124.inventorytracker.collections;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  *
@@ -15,18 +16,20 @@ import java.util.HashMap;
 
     public class Item {
 
-        private String itemId;
+        private UUID itemId;
         private String name;
         private double price;
         private HashMap<Tag, ArrayList<String>> tags = new HashMap();
         private Status itemStatus;
+        private UUID locationId;
 //        private String imgSrc;
 
         private Item(ItemBuilder builder) {
-            this.itemId = builder.itemId;
+            itemId = UUID.randomUUID();
             this.name = builder.name;
             this.price = builder.price;
             this.tags = builder.tags;
+            this.locationId = builder.locationId;
             this.itemStatus = builder.itemStatus;
 //            this.imgSrc = builder.imgSrc;
         }
@@ -55,12 +58,20 @@ import java.util.HashMap;
             return itemStatus = newStatus;
         }
 
-        public String getItemId() {
+        public UUID getLocation(){
+            return locationId;
+        }
+        
+        public void setLocation(UUID locationId){
+            this.locationId = locationId;
+        }
+        
+        public UUID getItemId() {
             return itemId;
         }
 
         //for testing only
-        public void setItemId(String id) {
+        public void setItemId(UUID id) {
             itemId = id;
         }
         
@@ -190,12 +201,11 @@ import java.util.HashMap;
     }
 
     public static class ItemBuilder {
-
-        private String itemId;
         private String name;
         private double price;
         private HashMap<Tag, ArrayList<String>> tags = new HashMap();
         private Status itemStatus;
+        private UUID locationId;
         private String imgSrc;
 
         public ItemBuilder(String name) {
@@ -223,6 +233,11 @@ import java.util.HashMap;
             return this;
         }
 //        
+        public ItemBuilder withLocationId(UUID locationId){
+            this.locationId = locationId;
+            return this;
+        }
+        
 //        public ItemBuilder withImage(String imSrc){
 //            this.imgSrc = imgSrc;
 //            return this;

@@ -4,20 +4,23 @@
  */
 package com.knappm124.inventorytracker.collections;
 
+import java.util.UUID;
+
 /**
  *
  * @author melissa
  */
 public class Location {
-    private String locationId;
+    private UUID locationId;
     private String name;
     
     public Location(String name){
         this.name = name;
+        locationId = UUID.randomUUID();
     }
     
     public boolean equals(Location l){
-       if(l.locationId.contains(locationId)){
+       if(l.getId().equals(this.locationId)){
            return l.name.equals(name);
        } else {
            return false;
@@ -29,11 +32,11 @@ public class Location {
         return "Location " + locationId + ": " + name;
     }
     
-    public String getId(){
+    public UUID getId(){
         return locationId;
     }
     
-    public void setId(String locationId){
+    public void setId(UUID locationId){
         this.locationId = locationId; 
     }
     

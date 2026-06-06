@@ -6,6 +6,7 @@ package com.knappm124.inventorytracker.collections;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  *
@@ -13,21 +14,21 @@ import java.util.Objects;
  */
 public class Tag {
 
-    private String tagId;
+    private UUID tagId;
     private String name;
     private final ArrayList<String> options;
 
     private Tag(TagBuilder builder) {
-        this.tagId = builder.tagId;
+        this.tagId = UUID.randomUUID();
         this.name = builder.name;
         this.options = builder.options;
     }
 
-    public void setTagId(String tagId){
+    public void setTagId(UUID tagId){
         this.tagId = tagId;
     }
     
-    public String getTagId() {
+    public UUID getTagId() {
         return tagId;
     }
 
@@ -94,7 +95,6 @@ public class Tag {
 
     public static class TagBuilder {
 
-        private String tagId;
         private String name;
         private ArrayList<String> options;
         
