@@ -3,12 +3,12 @@
  */
 package com.knappm124.inventorytracker;
 
-import com.knappm124.inventorytracker.collections.Tag;
-import com.knappm124.inventorytracker.database.DatabaseConnector;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoDatabase;
-import java.util.ArrayList;
+import Interactions.Adder;
+import Interactions.Remover;
+import Interactions.Updater;
+import com.knappm124.inventorytracker.collections.Collections;
+import java.io.IOException;
+import java.util.Scanner;
 
 /**
  *
@@ -16,40 +16,81 @@ import java.util.ArrayList;
  */
 public class InventoryTracker {
 
-    public static void main(String[] args)  {
-        String uri = "mongodb+srv://";
-
-        uri = uri + System.getenv("DBUSR");
-        uri = uri + System.getenv("DBPWD");
-        uri = uri + System.getenv("DBCLSTR");
-        
-        ArrayList<String> options = new ArrayList<>();
-        options.add("Red");
-        options.add("Orange");
-        options.add("Yellow");
-        options.add("Green");
-        options.add("Blue");
-        options.add("Purple");
-        Tag t = new Tag.TagBuilder("Colors").withOptions(options).build();
-        
-        ArrayList<String> options2 = new ArrayList<>();
-        options2.add("Blue");
-        options2.add("Red");
-        options2.add("Green");
-        options2.add("Gold");
-        Tag t2 = new Tag.TagBuilder("Color").withOptions(options2).build();
-        t2.setTagId("69fe5e96e4bb6f816ad47bb5");
-        
-        try {
-            MongoClient mc = MongoClients.create(uri);
-            MongoDatabase database = mc.getDatabase("Inventory");
-            DatabaseConnector dc = new DatabaseConnector(database);
-            dc.execute("GETALL");
-            dc.execute("UPDATE",t2, t);
-            dc.execute("GETALL");
-            dc.execute("PRINT");
-        } catch (Exception e){
-            System.out.println(e.getMessage());
+    public static void main(String[] args) throws IOException  {
+        Scanner sc = new Scanner(System.in);
+        int choice = 0;
+        while(choice != 10){
+            Collections c = new Collections();
+            Adder a = new Adder(c);
+            Remover r = new Remover(c);
+            Updater u = new Updater(c);
+            try {
+                c.read();
+            } catch (Exception e){
+               
+            }
+            System.out.println("What do you want to do?");
+            System.out.println("1. Add a new location");
+            System.out.println("2. Add a new tag");
+            System.out.println("3. Add a new item");
+            System.out.println("4. Edit existing location");
+            System.out.println("5. Edit existing tag");
+            System.out.println("6. Edit existing item");
+            System.out.println("7. Delete existing location");
+            System.out.println("8. Delete existing tag");
+            System.out.println("9. Delete existing item");
+            System.out.println("10. Exit");
+            
+            choice = sc.nextInt();
+            switch (choice) {
+                case 1:
+                    c = a.addLocation();
+                    r.updateCollection(c);
+                    u.updateCollection(c);
+                    choice = 0;
+                case 2:
+                    c = a.addTag();
+                    r.updateCollection(c);
+                    u.updateCollection(c);
+                    choice = 0;
+                case 3:
+                    c = a.addLocation();
+                    r.updateCollection(c);
+                    u.updateCollection(c);
+                    choice = 0;
+                case 4:
+                    c = u.updateLocation();
+                    a.updateCollection(c);
+                    r.updateCollection(c);
+                    choice = 0;
+                case 5:
+                    c = u.updateTag();
+                    a.updateCollection(c);
+                    r.updateCollection(c);
+                    choice = 0;
+                case 6:
+                    c = u.updateItem();
+                    a.updateCollection(c);
+                    r.updateCollection(c);
+                    choice = 0;
+                case 7:
+                    c = r.removeLocation();
+                    u.updateCollection(c);
+                    a.updateCollection(c);
+                    choice = 0;
+                case 8:
+                    c = r.removeTag();
+                    u.updateCollection(c);
+                    a.updateCollection(c);
+                    choice = 0;
+                case 9:
+                    c = r.removeItem();
+                    u.updateCollection(c);
+                    a.updateCollection(c);
+                    choice = 0;
+                case 10:
+                    break;
+            }
         }
     }
 }

@@ -13,6 +13,7 @@ import java.util.UUID;
 public class Location {
     private UUID locationId;
     private String name;
+    private static final long serialVersionUID = 1L;
     
     public Location(String name){
         this.name = name;
@@ -38,13 +39,15 @@ public class Location {
     
     public void setId(UUID locationId){
         this.locationId = locationId; 
+        return this;
     }
     
     public String getName() {
         return name;
     }
     
-    public void setName(String newName) {
+    public Location setName(String newName) {
         name = newName;
+        return this;
     }
 }

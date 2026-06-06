@@ -4,6 +4,7 @@
  */
 package com.knappm124.inventorytracker.collections;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -14,7 +15,7 @@ import java.util.UUID;
  */
   
 
-    public class Item {
+    public class Item implements Serializable {
 
         private UUID itemId;
         private String name;
@@ -23,6 +24,7 @@ import java.util.UUID;
         private Status itemStatus;
         private UUID locationId;
 //        private String imgSrc;
+        private static final long serialVersionUID = 1L;
 
         private Item(ItemBuilder builder) {
             itemId = UUID.randomUUID();
@@ -73,6 +75,14 @@ import java.util.UUID;
         //for testing only
         public void setItemId(UUID id) {
             itemId = id;
+        }
+        
+        public String getLocationId(){
+            return locationId;
+        }
+        
+        public void setLocationId(String locationId){
+            this.locationId = locationId;
         }
         
         public HashMap<Tag, ArrayList<String>> addTag(Tag t, String option) {
@@ -242,6 +252,11 @@ import java.util.UUID;
 //            this.imgSrc = imgSrc;
 //            return this;
 //        }
+        
+        public ItemBuilder withLocationId(String locationId){
+            this.locationId = locationId;
+            return this;
+        }
 
         public Item build() {
             return new Item(this);
