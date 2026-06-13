@@ -12,6 +12,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.UUID;
 
 /**
  *
@@ -22,14 +24,34 @@ public class Collections implements Serializable {
     ArrayList<Location> locations;
     ArrayList<Tag> tags;
     ArrayList<Item> items;
-    int itemIdCounter;
-    int tagIdCounter;
-    int locationIdCounter;
     private static final long serialVersionUID = 1L;
 
     public Collections() {
         locations = new ArrayList();
+        Location l = new Location("Home");
+        Location l2 = new Location("General Store");
+        Location l3 = new Location("Etsy");
+        locations.add(l);
+        locations.add(l2);
+        locations.add(l3);
+        
         tags = new ArrayList();
+        ArrayList<String> options = new ArrayList<>(Arrays.asList("Red","Orange","Yellow","Green","Blue","Purple","Pink","Brown","Black"));
+        Tag t = new Tag.TagBuilder("Colors").withOptions(options).build();
+        ArrayList<String> options2 = new ArrayList<>(Arrays.asList("Quail","Pullet","Chicken","Duck","Goose","Rhea","Ostrich"));
+        Tag t2 = new Tag.TagBuilder("Size").withOptions(options2).build();
+        ArrayList<String> options3 = new ArrayList<>(Arrays.asList("Baby","Christmas","Easter","Fall","Spring","Wedding"));
+        Tag t3 = new Tag.TagBuilder("Occassion").withOptions(options3).build();
+        ArrayList<String> options4 = new ArrayList<>(Arrays.asList("Animal","Person","Plant","Religious","Star"));
+        Tag t4 = new Tag.TagBuilder("Symbols").withOptions(options4).build();
+        ArrayList<String> options5 = new ArrayList<>(Arrays.asList("Band","Circles","Diagonal Band","Four Panels","Star","Triangles"));
+        Tag t5 = new Tag.TagBuilder("Division").withOptions(options5).build();
+        tags.add(t);
+        tags.add(t2);
+        tags.add(t3);
+        tags.add(t4);
+        tags.add(t5);
+        
         items = new ArrayList();
     }
 
@@ -45,8 +67,6 @@ public class Collections implements Serializable {
                 throw new IllegalArgumentException("Location already exists");
             }
         }
-        l.setId(String.valueOf(locationIdCounter));
-        locationIdCounter++;
         locations.add(l);
         return l;
     }
@@ -112,17 +132,17 @@ public class Collections implements Serializable {
         tags.add(i,t2);
     }
 
-    public ArrayList<Item> removeItem(Item oldItem) {
+    public ArrayList<Item> removeItem(UUID itemID) {
         for (Item i : items) {
-            if (i.getItemId() == oldItem.getItemId()) {
-                items.remove(oldItem);
+            if (i.getItemId().toString().equals(itemID.toString())) {
+                items.remove(i);
                 return items;
             }
         }
-        throw new IllegalArgumentException("Item with id " + oldItem.getItemId() + " does not exist");
+        throw new IllegalArgumentException("Item with id " + itemID.toString() + " does not exist");
     }
 
-    public Item getItem(String itemId) {
+    public Item getItem(UUID itemId) {
         for (Item i : items) {
             if (i.getItemId().equals(itemId)) {
                 return i;
@@ -178,9 +198,6 @@ public class Collections implements Serializable {
         }
         FileInputStream file = new FileInputStream("counter.svr");
         ObjectInputStream stream = new ObjectInputStream(file);
-        tagIdCounter = stream.readInt();
-        locationIdCounter = stream.readInt();
-        itemIdCounter = stream.readInt();
 
     }
 
@@ -208,9 +225,6 @@ public class Collections implements Serializable {
 
         FileOutputStream file4 = new FileOutputStream("counter.svr");
         ObjectOutputStream stream4 = new ObjectOutputStream(file4);
-        stream4.writeObject(tagIdCounter);
-        stream4.writeObject(locationIdCounter);
-        stream4.writeObject(itemIdCounter);
         stream4.close();
 
     }

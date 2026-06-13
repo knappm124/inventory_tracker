@@ -39,15 +39,13 @@ public class Location {
     
     public void setId(UUID locationId){
         this.locationId = locationId; 
-        return this;
     }
     
     public String getName() {
         return name;
     }
     
-    public Location setName(String newName) {
+    public void setName(String newName) {
         name = newName;
-        return this;
     }
 }

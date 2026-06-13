@@ -6,6 +6,7 @@ package com.knappm124.inventorytracker;
 
 import com.knappm124.inventorytracker.collections.Tag;
 import java.util.ArrayList;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
@@ -23,7 +24,8 @@ public class TagTest {
         options.add("Blue");
         options.add("Red");
         t = new Tag.TagBuilder("Color").withOptions(options).build();
-        t.setTagId("326");
+        UUID id = UUID.fromString("fa7e2f91-1e90-4a04-aeb0-690b6776fdfb");
+        t.setTagId(id);
     }
 
     /**
@@ -31,8 +33,8 @@ public class TagTest {
      */
     @Test
     public void testGetTagId() {
-        String expResult = "326";
-        String result = t.getTagId();
+        String expResult = "fa7e2f91-1e90-4a04-aeb0-690b6776fdfb";
+        String result = t.getTagId().toString();
         assertEquals(result,expResult);
     }
 

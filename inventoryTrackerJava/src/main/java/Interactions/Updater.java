@@ -8,6 +8,7 @@ import com.knappm124.inventorytracker.collections.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.UUID;
 
 /**
  *
@@ -45,8 +46,8 @@ public class Updater {
             System.out.println(n + ". " + items.get(n).toString());
         }
         int n = System.in.read();
-        String s = items.get(n).getItemId();
-        Item i = c.getItem(s);
+        UUID id = items.get(n).getItemId();
+        Item i = c.getItem(id);
         int m = 0;
         while (0 >= m || m >= 6) {
             System.out.println("What do you want to update?");
@@ -173,9 +174,9 @@ public class Updater {
             while (true) {
                 int n = System.in.read();
                 if (locations.containsKey(n)) {
-                    String locationId = locations.get(n).getId();
+                    String locationId = locations.get(n).getId().toString();
                     Item temp = items.get(n);
-                    temp.setLocationId(locationId);
+                    temp.setLocationId(UUID.fromString(locationId));
                     items.put(n, temp);
                     c.updateItem(i, temp);
                     break;

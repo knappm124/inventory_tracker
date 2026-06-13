@@ -9,8 +9,7 @@ import com.knappm124.inventorytracker.collections.Collections;
 import com.knappm124.inventorytracker.collections.Location;
 import com.knappm124.inventorytracker.collections.Item;
 import java.util.ArrayList;
-import java.lang.IllegalArgumentException;
-import java.util.List;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
@@ -20,28 +19,30 @@ import org.junit.jupiter.api.BeforeAll;
  * @author melissa
  */
 public class CollectionsTest {
-    
+
     private static Collections c;
-    
+
     @BeforeAll
-    public static void globalSetUp(){
+    public static void globalSetUp() {
         c = new Collections();
-        
+
         Location l = new Location("General Store");
         c.addLocation(l);
-        
+
         Tag t = new Tag.TagBuilder("Divides").build();
         c.addTag(t);
-        
+
         Tag t2 = new Tag.TagBuilder("Season").build();
         c.addTag(t2);
-        
+
         Item i = new Item.ItemBuilder("Test Egg").withPrice(5.00).build();
-        i.setItemId("256");
+        UUID id = UUID.fromString("fa7e2f91-1e90-4a04-aeb0-690b6776fdfb");
+        i.setItemId(id);
         c.addItem(i);
-        
+
         Item i2 = new Item.ItemBuilder("Chicken Egg").withPrice(10.00).build();
-        i2.setItemId("526");
+        UUID id2 = UUID.fromString("66396db6-9f3c-439d-a01e-983800a06c1c");
+        i2.setItemId(id2);
         c.addItem(i2);
     }
 
@@ -49,7 +50,7 @@ public class CollectionsTest {
      * Test of addLocation method, of class Collections.
      */
     @Test
-    public void testAddLocation() { 
+    public void testAddLocation() {
         Location l = new Location("Other");
         c.addLocation(l);
         assertTrue(c.getLocations().contains(l));
@@ -64,7 +65,7 @@ public class CollectionsTest {
         c.addLocation(l);
         ArrayList<Location> result = c.getLocations();
         ArrayList<Location> expResult = new ArrayList<>();
-        assertNotEquals(result,expResult);
+        assertNotEquals(result, expResult);
         assertTrue(result.contains(l));
     }
 
@@ -76,11 +77,11 @@ public class CollectionsTest {
         Location l = new Location("Home");
         c.addLocation(l);
         Location result = c.getLocation("Home");
-        assertEquals(result,l);
+        assertEquals(result, l);
         try {
             c.getLocation("Etsy");
-        } catch (Exception e){
-            assertEquals(e.getMessage(),"Location doesn't exist");
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Location doesn't exist");
         }
     }
 
@@ -110,10 +111,10 @@ public class CollectionsTest {
         Tag t2 = new Tag.TagBuilder("Color").build();
         try {
             c.addTag(t2);
-        } catch (Exception e){
-            assertEquals(e.getMessage(),"This tag already exists");
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "This tag already exists");
         }
-        
+
     }
 
     /**
@@ -132,7 +133,7 @@ public class CollectionsTest {
             c.removeTag(t3);
         } catch (Exception e) {
             String message = e.getMessage();
-            assertEquals(message,"Tag does not exist");
+            assertEquals(message, "Tag does not exist");
         }
     }
 
@@ -141,9 +142,13 @@ public class CollectionsTest {
      */
     @Test
     public void testRemoveItem() {
-        Item i = new Item.ItemBuilder("Test Egg").withPrice(5.00).build();
-        c.removeItem(i);
-        assertFalse(c.getAllItems().contains(i));
+        UUID id = UUID.fromString("fa7e2f91-1e90-4a04-aeb0-690b6776fdfb");
+        ArrayList<Item> items = c.removeItem(id);
+        ArrayList<String> strings = new ArrayList<>();
+        for (Item i : items) {
+            strings.add(i.getItemId().toString());
+        }
+        assertFalse(strings.contains(id.toString()));
     }
 
     /**
@@ -151,13 +156,14 @@ public class CollectionsTest {
      */
     @Test
     public void testGetItem() {
-        Item i = c.getItem("256");
+        UUID id = UUID.fromString("fa7e2f91-1e90-4a04-aeb0-690b6776fdfb");
+        Item i = c.getItem(id);
         String result = i.getName();
         String expResult = "Test Egg";
         Double result2 = i.getPrice();
         Double expResult2 = 5.00;
-        assertEquals(result,expResult);
-        assertEquals(result2,expResult2);
+        assertEquals(result, expResult);
+        assertEquals(result2, expResult2);
     }
 
     /**
@@ -166,17 +172,17 @@ public class CollectionsTest {
     @Test
     public void testGetAllItems() {
         ArrayList<Item> items = c.getAllItems();
-        for(Item i : items){
-            if("256".equals(i.getItemId())){
+        for (Item i : items) {
+            if ("fa7e2f91-1e90-4a04-aeb0-690b6776fdfb".equals(i.getItemId().toString())) {
                 String expResult = "Test Egg";
-                assertEquals(i.getName(),expResult);
+                assertEquals(i.getName(), expResult);
                 double expResult2 = 5.00;
-                assertEquals(i.getPrice(),expResult2);
-            } else if("526".equals(i.getItemId())){
+                assertEquals(i.getPrice(), expResult2);
+            } else if ("66396db6-9f3c-439d-a01e-983800a06c1c".equals(i.getItemId().toString())) {
                 String expResult = "Chicken Egg";
-                assertEquals(i.getName(),expResult);
+                assertEquals(i.getName(), expResult);
                 double expResult2 = 10.00;
-                assertEquals(i.getPrice(),expResult2);
+                assertEquals(i.getPrice(), expResult2);
             }
         }
     }

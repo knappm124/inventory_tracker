@@ -5,6 +5,7 @@
 package com.knappm124.inventorytracker;
 
 import com.knappm124.inventorytracker.collections.Location;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
@@ -19,7 +20,8 @@ public class LocationTest {
     @BeforeAll
     public static void globalSetUp(){
         l = new Location("General Store");
-        l.setId("256");
+        UUID id = UUID.fromString("fa7e2f91-1e90-4a04-aeb0-690b6776fdfb");
+        l.setId(id);
     }
 
     /**
@@ -27,8 +29,8 @@ public class LocationTest {
      */
     @Test
     public void testGetId() {
-        String result = l.getId();
-        String expResult = "256";
+        String result = l.getId().toString();
+        String expResult = "fa7e2f91-1e90-4a04-aeb0-690b6776fdfb";
         assertEquals(result,expResult);
     }
 

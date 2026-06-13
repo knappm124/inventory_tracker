@@ -211,6 +211,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         MenuNewItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         MenuNewItem.setText("New Item");
+        MenuNewItem.addActionListener(this::MenuNewItemActionPerformed);
         MenuFile.add(MenuNewItem);
 
         MenuFilter.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -313,8 +314,8 @@ public class MainFrame extends javax.swing.JFrame {
        Object location = PopUpNewItemLocation.getSelectedItem();
        String temp = (String) status;
        temp = temp.toUpperCase();
-       String id = (String) location;
-       Location l = c.getLocation(id);
+       String loc = (String) location;
+       Location l = c.getLocation(loc);
        try{
            Double priceDouble = Double.valueOf(price);
            Item i = new Item.ItemBuilder(name).withPrice(priceDouble).withStatus(Status.valueOf(temp)).withLocationId(l.getId()).build();
@@ -325,8 +326,16 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_PopUpNewItemSaveButtonActionPerformed
 
     private void PopUpNewItemCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PopUpNewItemCancelButtonActionPerformed
-       
+        PopUpNewItemName.setText("Name");
+        PopUpNewItemPrice.setText("Enter Price");
+        PopUpNewItemLocation.setSelectedIndex(0);
+        PopUpNewItemStatus.setSelectedIndex(0);
+        PopUpNewItem.setVisible(false);
     }//GEN-LAST:event_PopUpNewItemCancelButtonActionPerformed
+
+    private void MenuNewItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuNewItemActionPerformed
+        PopUpNewItem.setVisible(true);
+    }//GEN-LAST:event_MenuNewItemActionPerformed
 
     /**
      * @param args the command line arguments

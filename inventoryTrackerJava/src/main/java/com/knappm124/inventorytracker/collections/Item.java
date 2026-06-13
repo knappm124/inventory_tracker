@@ -77,11 +77,11 @@ import java.util.UUID;
             itemId = id;
         }
         
-        public String getLocationId(){
+        public UUID getLocationId(){
             return locationId;
         }
         
-        public void setLocationId(String locationId){
+        public void setLocationId(UUID locationId){
             this.locationId = locationId;
         }
         
@@ -186,29 +186,7 @@ import java.util.UUID;
         sb.delete(end - 2, end);
 
         return sb.toString();
-    }
-    
-    @Override
-    public boolean equals(Object obj){
-        Item i = (Item) obj;
-        if(i.getStatus() == itemStatus && (i.getName().equals(name)) && i.getPrice() == price){
-            for(Tag t : tags.keySet()){
-                if(!i.containsTag(t)){
-                    return false;
-                } else {
-                    for (String s : tags.get(t)){
-                        ArrayList<String> options = i.getOptions(t.getName());
-                        if (!options.contains(s)){
-                            return false;
-                        }
-                    }
-                }
-            }
-            return true;
-        } else {
-            return false;
-        }
-    }
+    }  
 
     public static class ItemBuilder {
         private String name;
@@ -216,7 +194,7 @@ import java.util.UUID;
         private HashMap<Tag, ArrayList<String>> tags = new HashMap();
         private Status itemStatus;
         private UUID locationId;
-        private String imgSrc;
+      //  private String imgSrc;
 
         public ItemBuilder(String name) {
             this.name = name;
@@ -254,7 +232,7 @@ import java.util.UUID;
 //        }
         
         public ItemBuilder withLocationId(String locationId){
-            this.locationId = locationId;
+            this.locationId = UUID.fromString(locationId);
             return this;
         }
 

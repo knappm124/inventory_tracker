@@ -9,6 +9,7 @@ import com.knappm124.inventorytracker.collections.Tag;
 import com.knappm124.inventorytracker.collections.Status;
 import com.knappm124.inventorytracker.collections.Item;
 import java.util.ArrayList;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +25,8 @@ public class ItemTest {
     @BeforeEach
     public void setUp() {
         i = new Item.ItemBuilder("Test Egg").withPrice(25.00).withStatus(Status.SOLD).build();
-        i.setItemId("5");
+        UUID id = UUID.fromString("fa7e2f91-1e90-4a04-aeb0-690b6776fdfb");
+        i.setItemId(id);
         ArrayList<String> s = new ArrayList<>();
         s.add("Red");
         s.add("Blue");
@@ -101,8 +103,8 @@ public class ItemTest {
      */
     @Test
     public void testGetItemId() {
-        String result = i.getItemId();
-        String expResult = "5";
+        String result = i.getItemId().toString();
+        String expResult = "fa7e2f91-1e90-4a04-aeb0-690b6776fdfb";
         assertEquals(result,expResult);
     }
 
